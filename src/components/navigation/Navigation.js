@@ -1,8 +1,16 @@
 import React from 'react';
 import './Navigation.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-function Navigation() {
+function Navigation({ isAuth, toggleAuth }) {
+
+    const navigate = useNavigate();
+
+    function signOut() {
+        toggleAuth(false);
+        navigate('/')
+    }
+
     return (
         <nav>
             <div className="nav-container">
@@ -16,20 +24,30 @@ function Navigation() {
                             Home
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink
-                            className={({ isActive }) => isActive ? 'active-menu-link' : 'default-menu-link'}
-                            to="/login">
-                            Login Pagina
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            className={({ isActive }) => isActive ? 'active-menu-link' : 'default-menu-link'}
-                            to="/blogs-overzicht">
-                            Blog Overzicht
-                        </NavLink>
-                    </li>
+                    {isAuth === true
+                        ?
+                        <>
+                            <li>
+                                <NavLink
+                                    className={({ isActive }) => isActive ? 'active-menu-link' : 'default-menu-link'}
+                                    to="/blogs-overzicht">
+                                    Blog Overzicht
+                                </NavLink>
+                            </li>
+                            <li>
+                                <button type="button" onClick={signOut}>
+                                    Uitloggen
+                                </button>
+                            </li>
+                        </>
+                        :
+                        <li>
+                            <NavLink
+                                className={({ isActive }) => isActive ? 'active-menu-link' : 'default-menu-link'}
+                                to="/login">
+                                Login Pagina
+                            </NavLink>
+                        </li>}
                 </ul>
             </div>
         </nav >

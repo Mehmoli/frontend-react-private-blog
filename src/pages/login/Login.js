@@ -1,13 +1,23 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import './Login.css'
 
-function Login() {
+function Login({ toggleAuth }) {
+    const navigate = useNavigate();
+
+    function signIn() {
+        toggleAuth(true);
+        navigate('/');
+    }
+
     return (
-        <>
-            <p>Druk op de konp om in te loggen.</p>
-            <Link to="/blogs-overzicht">
-                <button>Inloggen</button>
-            </Link>
-        </>
+        <section className='login-page-section'>
+            <div>
+                <p>Druk op de konp om in te loggen.</p>
+
+                <button type='button' onClick={signIn}>Inloggen</button>
+
+            </div>
+        </section>
     )
 }
 
